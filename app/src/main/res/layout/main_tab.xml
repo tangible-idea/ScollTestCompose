@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.tabs.TabLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tabMainMy"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    app:tabGravity="start"
+    app:tabIndicatorColor="#333"
+    app:tabIndicatorFullWidth="false"
+    app:tabMode="scrollable"
+    app:tabIndicatorHeight="2dp"
+    app:tabTextAppearance="@style/TextTabTitle"
+    app:tabPaddingStart="0dp"
+    app:tabPaddingEnd="0dp"
+    android:paddingStart="12dp"
+    android:theme="@style/ThemeCustom.TabLayout"
+    android:background="@color/netural2_f4f5f6"
+    app:tabTextColor="@color/coolgray7_21252c">
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체 계약" />
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대출" />
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보장" />
+
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="자산" />
+
+</com.google.android.material.tabs.TabLayout>

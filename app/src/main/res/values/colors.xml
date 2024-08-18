@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+
+
+    <color name="background_white">#FFFFFFFF</color>
+
+    <color name="background_primary_fill">#f2f6ff</color>
+    <color name="background_primary_div">#e8ecff</color>
+    <color name="background_primary_line">#d6e1fe</color>
+    <color name="background_gray_fill_1">#f8f8f8</color>
+    <color name="background_gray_fill_2">#eeeeee</color>
+
+
+
+    <color name="background_white_10">#1affffff</color>
+    <color name="background_black_60">#66000000</color>
+
+    <color name="color_222222">#ff222222</color>
+
+    <color name="background_f7f9ff">#F7F9FF</color>
+    <color name="background_f2fafc">#F2FAFC</color>
+    <color name="background_fef6fb">#FEF6FB</color>
+    <color name="background_dddddd">#DDDDDD</color>
+    <color name="background_f4f2ff">#F4F2FF</color>
+
+
+    <color name="font_point_purple">#5642bf</color>
+    <color name="font_point_blue">#445fe6</color>
+    <color name="font_point_green">#00A3BB</color>
+    <color name="font_title">#222222</color>
+    <color name="font_body">#666666</color>
+    <color name="font_disable">#959595</color>
+    <color name="font_placeholder">#bbbbbb</color>
+    <color name="font_white">#ffffff</color>
+
+    <color name="font_white_70">#B3ffffff</color>
+    <color name="font_white_90">#E6ffffff</color>
+    <color name="font_pink">#E658B2</color>
+    <color name="font_aaa">#AAAAAA</color>
+
+    <color name="error">#E91B10</color>
+
+
+
+    <color name="primary_main">#715deb</color>
+
+    <color name="primary_sub_dad5f9">#dad5f9</color>
+    <color name="primary_sub_f0edfc">#f0edfc</color>
+    <color name="primary_sub_5d88fb">#5d88fb</color>
+    <color name="primary_sub_7D7A8E">#7D7A8E</color>
+    <color name="primary_sub_EEEEEE">#EEEEEE</color>
+
+    <color name="secondary_blue">#00428e</color>
+    <color name="secondary_gold">#b87900</color>
+    <color name="secondary_green">#3e9100</color>
+    <color name="secondary_green_sub">#00a3bb</color>
+    <color name="secondary_pink">#e658b2</color>
+    <color name="secondary_red">#e9473f</color>
+    <color name="secondary_violet">#6d2d9e</color>
+    <color name="secondary_yellow">#ffdf60</color>
+
+    <color name="line_table">#dddddd</color>
+    <color name="line_button">#cccccc</color>
+
+    <color name="table_inline_y">#f2f2f2</color>
+    <color name="table_end_line">#aaaaaa</color>
+
+    <color name="accordion_line_open">#aaaaaa</color>
+    <color name="accordion_line_close">#EEEEEE</color>
+
+    <color name="arcprogress_background_color">#F8F7FE</color>
+    <color name="arcprogress_progress_color">#F8F7FE</color>
+
+    <color name="menu_tab_background_color">#F0EEFD</color>
+
+
+
+    <color name="default_shadow_color">#33000000</color>
+
+    <color name="default_on_boarding_color">#5F63E4</color>
+    <color name="white_50">#80ffffff</color>
+
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="primary1_ecf2fb">#ECF2FB</color>
+    <color name="primary2_d6e5ff">#D6E5FF</color>
+    <color name="primary3_96b8f5">#96B8F5</color>
+    <color name="primary4_6991ef">#6991EF</color>
+    <color name="primary5_497df5">#497DF5</color>
+    <color name="primary6_1f5bff">#1F5BFF</color>
+    <color name="primary7_0043f5">#0043F5</color>
+    <color name="primary8_0032b8">#0032B8</color>
+
+    <color name="primary6_transparent30">#4D1F5BFF</color>
+
+    <color name="secondary1_f1f0fe">#F1F0FE</color>
+    <color name="secondary2_ebe9fd">#EBE9FD</color>
+    <color name="secondary3_cfcafa">#CFCAFA</color>
+    <color name="secondary4_a8a1eb">#A8A1EB</color>
+    <color name="secondary5_8e82f8">#8E82F8</color>
+    <color name="secondary6_6e60f1">#6E60F1</color>
+    <color name="secondary7_6152ea">#6152EA</color>
+    <color name="secondary8_3f32b1">#3F32B1</color>
+
+
+    <color name="coolgray1_f9fafb">#F9FAFB</color>
+    <color name="coolgray2_AEB3BA">#AEB3BA</color>
+    <color name="coolgray3_88909a">#88909A</color>
+    <color name="coolgray4_6b7581">#6B7581</color>
+    <color name="coolgray5_6b7581">#6B7581</color>
+    <color name="coolgray6_47515f">#47515F</color>
+    <color name="coolgray7_21252c">#21252C</color>
+
+    <color name="netural1_f9f9fa">#F9F9FA</color>
+    <color name="netural2_f4f5f6">#F4F5F6</color>
+    <color name="netural3_edeef0">#EDEEF0</color>
+    <color name="netural4_dedfe3">#DEDFE3</color>
+    <color name="netural4_translucent">#88DEDFE3</color>
+    <color name="netural5_c8ccd0">#C8CCD0</color>
+
+    <color name="gray_717a86">#717A86</color>
+
+    <color name="red4_e40000">#E40000</color>
+
+    <color name="informational_blue1_e8f3ff">#E8F3FF</color>
+    <color name="informational_blue2_d0e4fb">#D0E4FB</color>
+    <color name="informational_blue3_7fa3fa">#7FA3FA</color>
+    <color name="informational_blue4_336afd">#336AFD</color>
+    <color name="informational_blue5_003ac5">#003AC5</color>
+
+    <color name="informational_red1">#FFF1F1</color>
+    <color name="informational_red2">#FBD0D6</color>
+    <color name="informational_red3">#FF5C5C</color>
+    <color name="informational_red4">#E40000</color>
+    <color name="informational_red5">#A50000</color>
+
+    <color name="informational_green1">#E1FDF2</color>
+    <color name="informational_green2">#D6F0E5</color>
+    <color name="informational_green3">#2AD190</color>
+    <color name="informational_green4">#008552</color>
+    <color name="informational_green5">#00452A</color>
+
+    <color name="toast_opacity80">#D9090A0B</color>
+
+</resources>
