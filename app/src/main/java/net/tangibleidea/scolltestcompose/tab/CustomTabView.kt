@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 fun CustomScrollableTabRow(
     tabs: List<String>,
     selectedTabIndex: Int,
+    modifier: Modifier,
     onTabClick: (Int) -> Unit
 ) {
     val density = LocalDensity.current
@@ -40,6 +41,7 @@ fun CustomScrollableTabRow(
         tabWidthStateList
     }
     ScrollableTabRow(
+        modifier = modifier,
         selectedTabIndex = selectedTabIndex,
         contentColor = Color.Black,
         containerColor = Color.White,

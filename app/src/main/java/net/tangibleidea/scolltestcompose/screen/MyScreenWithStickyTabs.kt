@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -25,7 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import net.tangibleidea.scolltestcompose.tab.CustomScrollableTabRow
 
 
@@ -33,6 +36,9 @@ import net.tangibleidea.scolltestcompose.tab.CustomScrollableTabRow
 fun MyScreenWithStickyTabs() {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
+    // Get local density from composable
+    val localDensity = LocalDensity.current
 
     // 탭의 Y 위치를 저장할 변수
     val tabOffsetY = remember { mutableFloatStateOf(0f) }
@@ -42,6 +48,12 @@ fun MyScreenWithStickyTabs() {
 
     /** 선택된 1차 탭 인덱스 */
     var selectedTabState by remember { mutableIntStateOf(0) }
+
+    // Create element height in pixel state
+    var columnHeightPx by remember { mutableFloatStateOf(0f) }
+
+    // Create element height in dp state
+    var columnHeightDp by remember { mutableStateOf(0.dp) }
 
     val tabs = listOf("전체계약", "대출", "보장", "자산")
 
@@ -81,7 +93,7 @@ fun MyScreenWithStickyTabs() {
                 .verticalScroll(scrollState)
         ) {
             // 첫 번째 섹션
-            SectionContent("탭 1의 내용", Color.Green.copy(alpha = 0.4f), sectionOffsets)
+            SectionContent("Tab1", Color.Green.copy(alpha = 0.4f), sectionOffsets, columnHeightPx)
 
             // 탭 영역 (StickyHeader처럼 동작)
             Box(
@@ -95,18 +107,26 @@ fun MyScreenWithStickyTabs() {
 //                    selectedTabState = index
 //                }
 
+                // When you select tab inside StickyHeader
                 CustomScrollableTabRow(
                     tabs = tabs,
                     selectedTabIndex = selectedTabState,
+                    modifier = Modifier
                 ) { tabIndex ->
                     selectedTabState = tabIndex
+
+                    coroutineScope.launch {
+                        val targetValue= sectionOffsets[tabIndex].toInt()
+                        scrollState.animateScrollTo(targetValue)
+                        Log.d("Scroll to", "animateScrollTo : $targetValue")
+                    }
                 }
             }
 
             // 두 번째 섹션
-            SectionContent("탭 2의 내용", Color.Green.copy(alpha = 0.3f), sectionOffsets)
-            SectionContent("탭 3의 내용", Color.Green.copy(alpha = 0.2f), sectionOffsets)
-            SectionContent("탭 4의 내용", Color.Green.copy(alpha = 0.1f), sectionOffsets)
+            SectionContent("Tab2", Color.Green.copy(alpha = 0.3f), sectionOffsets, columnHeightPx)
+            SectionContent("Tab3", Color.Green.copy(alpha = 0.2f), sectionOffsets, columnHeightPx)
+            SectionContent("Tab4", Color.Green.copy(alpha = 0.1f), sectionOffsets, columnHeightPx)
         }
 
         // 스크롤 위치에 따라 탭을 화면 상단에 고정
@@ -123,8 +143,15 @@ fun MyScreenWithStickyTabs() {
                 CustomScrollableTabRow(
                     tabs = tabs,
                     selectedTabIndex = selectedTabState,
+                    Modifier
                 ) { tabIndex ->
                     selectedTabState = tabIndex
+
+                    coroutineScope.launch {
+                        val targetValue= sectionOffsets[tabIndex].toInt()
+                        scrollState.animateScrollTo(targetValue)
+                        Log.d("Scroll to", "animateScrollTo : $targetValue")
+                    }
                 }
             }
         }
@@ -133,7 +160,7 @@ fun MyScreenWithStickyTabs() {
 
 
 @Composable
-fun SectionContent(title: String, color: Color, sectionOffsets: SnapshotStateList<Float>) {
+fun SectionContent(title: String, color: Color, sectionOffsets: SnapshotStateList<Float>, stickyHeaderOffset: Float= 150f) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -142,11 +169,13 @@ fun SectionContent(title: String, color: Color, sectionOffsets: SnapshotStateLis
             .onGloballyPositioned { coordinates ->
                 // 섹션의 Y 위치 저장
                 if (sectionOffsets.size < 4) {
-                    sectionOffsets.add(coordinates.positionInParent().y)
+                    sectionOffsets.add(coordinates.positionInParent().y - 135f)
                 }
             },
         contentAlignment = Alignment.Center
     ) {
-        Text(text = title, color = Color.White, style = MaterialTheme.typography.titleLarge)
+        Text(text = "$title start", Modifier.align(Alignment.TopStart), style = MaterialTheme.typography.titleLarge)
+        Text(text = "$title content", style = MaterialTheme.typography.titleLarge)
+        Text(text = "$title end", Modifier.align(Alignment.BottomEnd), color = Color.White, style = MaterialTheme.typography.titleLarge)
     }
 }
