@@ -1,4 +1,4 @@
-package net.tangibleidea.scolltestcompose
+package net.tangibleidea.scolltestcompose.tab
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
