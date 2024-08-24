@@ -3,6 +3,7 @@ package net.tangibleidea.scolltestcompose
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.ScrollState
@@ -16,11 +17,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,19 +57,39 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val scope = rememberCoroutineScope()
+
             // 탑바(툴바) 스크롤 시 사라지게하는 behavior 옵션.
             val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+            val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
+            // 뒤로 가기 버튼 처리
+            BackHandler(enabled = drawerState.isOpen) {
+                scope.launch {
+                    drawerState.close()
+                }
+            }
+
             ScollTestComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection)
-                            .statusBarsPadding(),
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .statusBarsPadding(),
                     topBar = {
                         FlexibleTopBar(
                             scrollBehavior = scrollBehavior,
                             content = {
-                                Box(Modifier.height(65.dp).background(Color.DarkGray).fillMaxWidth()) {
-
+                                Box(
+                                    Modifier.height(65.dp).background(Color.DarkGray)
+                                        .fillMaxWidth()
+                                ) {
+                                    IconButton(onClick = {
+                                        scope.launch {
+                                            drawerState.open()
+                                        }
+                                    }) {
+                                        Icon(Icons.Filled.Menu, contentDescription = "메뉴 열기")
+                                    }
                                 }
                             })
                     }
@@ -90,19 +117,22 @@ fun MyScreenWithStickyTabs() {
     /** 선택된 1차 탭 인덱스 */
     var selectedTabState by remember { mutableIntStateOf(0) }
 
+    val tabs = listOf("전체계약", "대출", "보장", "자산")
+
     // 스크롤 상태에 따른 탭 선택 상태 업데이트
     LaunchedEffect(key1 = scrollState.value) {
 
         if (sectionOffsets.isNotEmpty()) {
             val currentScrollY = scrollState.value.toFloat()
-            Log.d("DEBUG", "Current Scroll Y: $currentScrollY")
+            //Log.d("DEBUG", "Current Scroll Y: $currentScrollY")
 
             for (i in 0 until sectionOffsets.size - 1) {
                 val sectionStart = sectionOffsets[i]
                 val sectionEnd = sectionOffsets[i + 1]
-                Log.d("DEBUG", "Section $i: Start = $sectionStart, End = $sectionEnd")
+                //Log.d("DEBUG", "Section $i: Start = $sectionStart, End = $sectionEnd")
 
-                if (currentScrollY in sectionStart..sectionEnd) {
+                // 조건 수정: sectionStart <= currentScrollY < sectionEnd
+                if (currentScrollY >= sectionStart && currentScrollY < sectionEnd) {
                     selectedTabState = i
                     Log.d("DEBUG", "Selected Tab State: $selectedTabState")
                     break
@@ -125,7 +155,7 @@ fun MyScreenWithStickyTabs() {
                 .verticalScroll(scrollState)
         ) {
             // 첫 번째 섹션
-            SectionContent("탭 1의 내용", Color.Red, sectionOffsets)
+            SectionContent("탭 1의 내용", Color.Green.copy(alpha = 0.4f), sectionOffsets)
 
             // 탭 영역 (StickyHeader처럼 동작)
             Box(
@@ -135,15 +165,22 @@ fun MyScreenWithStickyTabs() {
                         tabOffsetY.value = coordinates.positionInParent().y
                     }
             ) {
-                TabNew(selectedTabState, coroutineScope, scrollState, sectionOffsets) { index ->
-                    selectedTabState = index
+//                TabNew(selectedTabState, coroutineScope, scrollState, sectionOffsets) { index ->
+//                    selectedTabState = index
+//                }
+
+                CustomScrollableTabRow(
+                    tabs = tabs,
+                    selectedTabIndex = selectedTabState,
+                ) { tabIndex ->
+                    selectedTabState = tabIndex
                 }
             }
 
             // 두 번째 섹션
-            SectionContent("탭 2의 내용", Color.Green, sectionOffsets)
-            SectionContent("탭 3의 내용", Color.Blue, sectionOffsets)
-            SectionContent("탭 4의 내용", Color.Yellow, sectionOffsets)
+            SectionContent("탭 2의 내용", Color.Green.copy(alpha = 0.3f), sectionOffsets)
+            SectionContent("탭 3의 내용", Color.Green.copy(alpha = 0.2f), sectionOffsets)
+            SectionContent("탭 4의 내용", Color.Green.copy(alpha = 0.1f), sectionOffsets)
         }
 
         // 스크롤 위치에 따라 탭을 화면 상단에 고정
@@ -154,8 +191,14 @@ fun MyScreenWithStickyTabs() {
                     .background(Color.LightGray)
                     .align(Alignment.TopCenter)
             ) {
-                TabNew(selectedTabState, coroutineScope, scrollState, sectionOffsets) { index ->
-                    selectedTabState = index
+//                TabNew(selectedTabState, coroutineScope, scrollState, sectionOffsets) { index ->
+//                    selectedTabState = index
+//                }
+                CustomScrollableTabRow(
+                    tabs = tabs,
+                    selectedTabIndex = selectedTabState,
+                ) { tabIndex ->
+                    selectedTabState = tabIndex
                 }
             }
         }
@@ -189,7 +232,7 @@ fun SectionContent(title: String, color: Color, sectionOffsets: SnapshotStateLis
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(if (title == "탭 1의 내용") 300.dp else 1000.dp)
+            .height(if (title == "탭 1의 내용") 200.dp else 500.dp)
             .background(color)
             .onGloballyPositioned { coordinates ->
                 // 섹션의 Y 위치 저장
